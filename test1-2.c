@@ -58,7 +58,6 @@ void mirrorBits(uint16_t* mask)
 
 int main()
 {
-    // 00010111
     uint64_t x = 23;
     uint16_t y = 10; 
     
