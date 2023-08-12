@@ -21,7 +21,7 @@ typedef struct littleStack
 	int* data; 		    
 } littleStack;
 
-littleStack createQueue()
+littleStack createStack()
 {
     littleStack stack; 
 
@@ -132,7 +132,7 @@ double calculate(char op, double arg1, double arg2)
 
 int evaluete(const char* input)
 {
-    littleStack values = createQueue();
+    littleStack values = createStack();
 
     while (*input)
     {
@@ -169,20 +169,16 @@ int evaluete(const char* input)
 char randomChar()
 {
     int token = rand() % (10 - (-10) + 1) + (-10);
-    //char letter;
 
     if (token > 0)
     {
-        //letter = 'A';
         return rand() % (90 - 65 + 1) + 65;
     }
     else
     {
-        //letter = 'a';
         return rand() % (122 - 97 + 1) + 97;
     }
     
-    //return letter + (rand() % 26) ; 
     return 'a';
 }
 
@@ -274,7 +270,7 @@ Book* createArray()
     for (size_t i = 0; i < COUNT; i++)
     {
         books[i].pages = rand() % (2000 - 5 + 1) + 5;
-        books[i].price = rand() % (1000 - 1 + 1) + 1.0;
+        books[i].price = (rand() % (1000 - 1 + 1))/1000. + 1.0;
         strcpy(books[i].author, randomCharArray()); 
         strcpy(books[i].title, randomCharArray()); 
     }
@@ -282,18 +278,20 @@ Book* createArray()
     return books; 
 }
 
-int main()
+void task2()
 {
-    srand(time(0));
-
     char input[] = "1 2 + 3 * 5 -";
     printf("evaluate: %d\n", evaluete(input));
+}
 
+void task1()
+{
+    srand(time(0));
     Book* books = createArray();
 
     for (size_t i = 0; i < COUNT; i++)
     {
-        printf("TITLE: %s, AUTHOR: %s, PAGES: %d, PRICE: %.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
+        printf("TITLE: %25s, AUTHOR: %25s, PAGES: %5d, PRICE: %5.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
     }
 
     qsort(books, COUNT, sizeof(Book), cmpPricesASC);
@@ -301,25 +299,16 @@ int main()
 
     for (size_t i = 0; i < COUNT; i++)
     {
-        printf("TITLE: %s, AUTHOR: %s, PAGES: %d, PRICE: %.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
+        printf("TITLE: %25s, AUTHOR: %25s, PAGES: %5d, PRICE: %5.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
     }
 
-    // qsort(books, COUNT, sizeof(Book), cmpAuthorsDESC);
-    // printf("\n");
-
-    // for (size_t i = 0; i < COUNT; i++)
-    // {
-    //     printf("TITLE: %s, AUTHOR: %s, PAGES: %d, PRICE: %.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
-    // }
-
-    // qsort(books, COUNT, sizeof(Book), cmpTitlesASC);
-    // printf("\n");
-
-    // for (size_t i = 0; i < COUNT; i++)
-    // {
-    //     printf("TITLE: %s, AUTHOR: %s, PAGES: %d, PRICE: %.2lf\n", books[i].title, books[i].author, books[i].pages, books[i].price);
-    // }
-
     free(books);
+}
+
+int main()
+{
+    task1();
+    task2();
+    
     return 0; 
 }
